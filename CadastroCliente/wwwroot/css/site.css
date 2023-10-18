@@ -1,0 +1,41 @@
+:root {
+    --branco-principal: #FFFFFF;
+    --cinza-secundario: #C0C0C0C0;
+    --Cor-Texto: #919491;
+    --botao-azul: #167BF7;
+    --cor-de-fundo: #C0C0C0C0;
+}
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: var(--cinza-secundario);
+    color: var(--Cor-Texto);
+}
+.Titulo {
+    padding-left:2em;
+    display:inline-block;
+    
+}
+
+.campo-invalido {
+    border: 1px solid red;
+}
+.centro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
