@@ -1,3 +1,4 @@
+using CadastroCliente;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -35,5 +36,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
+DatabaseInitializer.InitializeDatabase(app);    
 
 app.Run();
