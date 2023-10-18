@@ -45,7 +45,7 @@ namespace CadastroCliente.Controllers
 			var newCadastro = _service.Salve(cadastro).Result;
 			return CreatedAtAction(nameof(Index), new { id = newCadastro.Id }, newCadastro);
 		}
-		[HttpDelete]
+		[HttpGet]
 		public IActionResult Deletar(int Id)
 		{
 			var deucerto = _service.Delete(Id).Result;
