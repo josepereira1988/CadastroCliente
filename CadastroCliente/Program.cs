@@ -16,6 +16,12 @@ builder.Services.AddDbContext<MyContext>(o => o.UseMySql(connectionString, Serve
 builder.Services.AddScoped<ICadastroClientePersist, CadastroClientePersist>();
 builder.Services.AddScoped<ICadastroClienteService, CadastroClienteService>();
 
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+	options.JsonSerializerOptions.WriteIndented = true;
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

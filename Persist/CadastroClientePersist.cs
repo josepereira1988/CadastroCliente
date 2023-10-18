@@ -18,7 +18,7 @@ namespace Persist
 			{
 				if (existe(Id))
 				{
-					_context.Remove(await _context.Clientes.Include(e => e.Endereco).Where(c => c.Id == Id).FirstOrDefaultAsync());
+					_context.Remove(await _context.Clientes.Where(c => c.Id == Id).FirstOrDefaultAsync());
 					await _context.SaveChangesAsync();
 					return true;
 				}
@@ -34,6 +34,27 @@ namespace Persist
 			}
 		}
 
+		public async Task<bool> DeleteEndereco(int Id)
+		{
+			try
+			{
+				if (existeendereco(Id))
+				{
+					_context.Remove(await _context.Endereco.Where(c => c.Id == Id).FirstOrDefaultAsync());
+					await _context.SaveChangesAsync();
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			catch (Exception ex)
+			{
+
+				throw new Exception(ex.Message);
+			}
+		}
 
 		public async Task<CadastroCliente> Get(int Id)
 		{
@@ -58,7 +79,19 @@ namespace Persist
 				{
 					if (existe(cliente.Id))
 					{
+						var entity = await _context.Clientes.Include(e => e.Endereco).Where(c => c.Id == cliente.Id).FirstOrDefaultAsync();
 						_context.Update(cliente);
+						foreach(var item in entity.Endereco)
+						{
+							if(item.Id == cliente.Endereco.Where(e => e.Id == item.Id).FirstOrDefault().Id)
+							{
+								_context.Update(item);
+							}
+							else
+							{
+								_context.Remove(item);
+							}
+						}
 					}
 					else
 					{
@@ -68,6 +101,10 @@ namespace Persist
 				else
 				{
 					_context.Add(cliente);
+					//foreach(var gravar in cliente.Endereco)
+					//{
+					//	_context.Add(gravar);
+					//}
 				}
 				await _context.SaveChangesAsync();
 				return cliente;
@@ -81,6 +118,10 @@ namespace Persist
 		private bool existe(int id)
 		{
 			return _context.Clientes.Any(e => e.Id == id);
+		}
+		private bool existeendereco(int id)
+		{
+			return _context.Endereco.Any(e => e.Id == id);
 		}
 	}
 }

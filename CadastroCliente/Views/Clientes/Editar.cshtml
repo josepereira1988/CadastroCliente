@@ -1,0 +1,91 @@
+﻿@model Domain.CadastroCliente
+<div class="card shadow-sm rounded-1 w-75">
+	<div class="px-2">
+		<form asp-action="Editar">
+			<div class="d-flex d-inline">
+				<div class="w-25">
+					<label class="col-form-label">ID</label>
+					<input class="form-control campoId" asp-for="Id" readonly />
+				</div>
+				<div class="w-75 px-1">
+					<label class="col-form-label">Nome</label>
+					<input class="form-control" asp-for="Name" />
+				</div>
+			</div>
+			<div class="d-flex d-inline">
+				<div class="w-25">
+					<label class="col-form-label">Data de Nacimento</label>
+					<input class="form-control" asp-for="DataNacimento" value="@Model.DataNacimento.ToString("yyyy-MM-dd")" type="date" />
+				</div>
+				<div class="w-75 px-1">
+					<label class="col-form-label">Telefone</label>
+					<input class="form-control Telefone" asp-for="Telefone" type="tel" />
+				</div>
+			</div>
+			<div>
+				<label class="col-form-label ">Email</label>
+				<input class="form-control Email" asp-for="Email" type="email" />
+			</div>
+			<div class="py-2 px-3 d-flex justify-content-between">
+				<button class="btn btn-outline-warning" id="btnEndereco">Adicionar Endereço</button>
+				<button class="btn btn-outline-primary" type="submit">Salvar</button>
+			</div>
+		</form>
+
+		<table id="example" class="table">
+			<thead class="table-active">
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Logadouro</th>
+					<th scope="col">Numero</th>
+					<th scope="col">CEP</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody id="tbEndeco">
+				@foreach (var item in Model.Endereco)
+				{
+					<tr>
+						<td>@item.Id</td>
+						<td>@item.logadouro</td>
+						<td>@item.numero</td>
+						<td>@item.CEP</td>
+						<td><a class="btn btn-outline-danger btnExcluirEndereco" onclick="excluir(@item.Id,@item.ClienteId)">Excluir</a></td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="modal fade" id="EnderecoModal" aria-hidden="true" aria-labelledby="EnderecoModal" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalToggleLabel2">Cadastrar Endereço</h5>
+			</div>
+			<div class="modal-body">
+				<div>
+					<label class="col-form-label">Logadouro</label>
+					<input class="campoEndereco form-control" id="logadouro" />
+				</div>
+				<div>
+					<label class="col-form-label">Numero</label>
+					<input class="campoEndereco form-control" id="numero" />
+				</div>
+				<div>
+					<label class="col-form-label">Complemento</label>
+					<input class="campoEndereco form-control" id="Complemento" />
+				</div>
+				<div>
+					<label class="col-form-label">CEP</label>
+					<input class="campoEndereco form-control" id="CEP" />
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				<button class="btn btn-outline-primary" id="btnaddEndereco">Adicionar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="~/js/EditarCliente.js" asp-append-version="true"></script>

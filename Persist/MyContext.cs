@@ -18,6 +18,7 @@ namespace Persist
         }
 		private IConfiguration _configuration;
 		public DbSet<CadastroCliente> Clientes { get; set; }
+		public DbSet<EnderecoCliente> Endereco { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{

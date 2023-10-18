@@ -12,6 +12,8 @@ namespace Domain
 		[Required(ErrorMessage = "O campo Logradouro é obrigatório.")]
 		[StringLength(100, ErrorMessage = "O campo Logradouro deve ter no máximo 100 caracteres.")]
 		public string logadouro { get; set; }
+		[StringLength(100, ErrorMessage = "O campo Complemento deve ter no máximo 100 caracteres.")]
+		public string Complemento { get; set; }
 
 		[Required(ErrorMessage = "O campo Número é obrigatório.")]
 		[RegularExpression(@"^\d{1,5}$", ErrorMessage = "Número de rua inválido.")]

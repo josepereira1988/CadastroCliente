@@ -12,13 +12,13 @@ function adicionarEnderecosNaTabela(endereco) {
 
     const newRow = corpoTabela.insertRow(-1);
 
-    const Id = newRow.insertCell(0);
-    const logadouro = newRow.insertCell(1);
-    const numero = newRow.insertCell(2);
-    const CEP = newRow.insertCell(3);
+    //const Id = newRow.insertCell(0);
+    const logadouro = newRow.insertCell(0);
+    const numero = newRow.insertCell(1);
+    const CEP = newRow.insertCell(2);
     
     Id.style.display = 'none';
-    Id.innerHTML = endereco.Id;
+    //Id.innerHTML = endereco.Id;
     logadouro.innerHTML = endereco.logadouro;
     numero.innerHTML = endereco.numero;
     CEP.innerHTML = endereco.CEP;
@@ -46,8 +46,8 @@ function salvarDados() {
 
         data[id] = valor;
     };
-
     const jsonData = JSON.stringify(data);
+    
     fetch(window.location.href + '/cadastro', {
         method: 'POST',
         headers: {
@@ -55,7 +55,7 @@ function salvarDados() {
         },
         body: jsonData
     })
-        .then(response => response.json())
+        .then(response => { response.json(); console.log(response.json()); })
         .then(data => {
             alert('Dados enviados com sucesso:');
             window.location.href = window.location.href;
@@ -82,7 +82,6 @@ btnExcluirConfirmar.addEventListener('click', function () {
 for (let i = 0; i < btnExcluir.length; i++) {
     const btn = btnExcluir[i];
     btn.addEventListener('click', function () {
-        console.log(btn.Name);
         document.querySelector("#ExcluirId").value = btn.id;
         document.querySelector("#lblExcluir").innerHTML = 'Deseja excluir o cliente "' + btn.name + '"';
         $("#ExcluirModal").modal("show");
@@ -96,6 +95,19 @@ function excluir() {
 for (let i = 0; i < camposCadastro.length; i++) {
     const campo = camposCadastro[i];
     if (campo.id != 'Id') {
+        campo.addEventListener('blur', function () {
+            if (campo.value != '') {
+                campo.classList.remove('campo-invalido');
+            } else {
+                campo.classList.add('campo-invalido');
+            }
+        });
+    }
+};
+
+for (let i = 0; i < campoEndereco.length; i++) {
+    const campo = campoEndereco[i];
+    if (campo.id != 'Id' && campo.id != 'Complemento') {
         campo.addEventListener('blur', function () {
             if (campo.value != '') {
                 campo.classList.remove('campo-invalido');
@@ -146,21 +158,23 @@ btnEndereco.addEventListener("click", function () {
 
 
 btnaddEndereco.addEventListener("click", function () {
-    console.log('aqui')
-    const endereco = { }
-    for (let i = 0; i < camposEndereco.length; i++) {
-        const campo = camposEndereco[i];
-        if (campo.id == "Id") {
-            campo.value = '0'
-        }
-        const id = campo.id;
-        const valor = campo.value;
+    if (validarCampoEndereco()) {
+        const endereco = {}
+        for (let i = 0; i < camposEndereco.length; i++) {
+            const campo = camposEndereco[i];
+            if (campo.id == "Id") {
+                campo.value = '0'
+            }
+            const id = campo.id;
+            const valor = campo.value;
 
-        endereco[id] = valor;        
-    };
-    data.Endereco.push(endereco);
-    adicionarEnderecosNaTabela(endereco);
-    $('#EnderecoModal').modal('hide');
+            endereco[id] = valor;
+        };
+        data.Endereco.push(endereco);
+        adicionarEnderecosNaTabela(endereco);
+        $('#EnderecoModal').modal('hide');
+    }
+    
 });
 
 
@@ -213,4 +227,23 @@ campoEmail.addEventListener('blur', function () {
         campoEmail.classList.add('campo-invalido');
     }
 });
+
+function validarCampoEndereco() {
+    let validar = true
+    for (let i = 0; i < campoEndereco.length; i++) {
+        const campo = campoEndereco[i];
+        if (campo.id != 'Id' && campo.id != 'Complemento') {
+            if (campo.value != '') {
+                campo.classList.remove('campo-invalido');
+            } else {
+                campo.classList.add('campo-invalido');
+            }
+        }
+
+        if (campo.classList.contains('campo-invalido') && validar) {
+            validar = false;
+        }
+    };
+    return validar
+}
 

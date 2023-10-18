@@ -12,5 +12,6 @@ namespace Domain
 		Task<CadastroCliente> Get(int Id);
 		Task<List<CadastroCliente>> GetAll();
 		Task<bool> Delete(int Id);
+		Task<bool> DeleteEndereco(int Id);
 	}
 }

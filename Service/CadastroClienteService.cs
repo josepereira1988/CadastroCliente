@@ -20,6 +20,10 @@ namespace Service
 		{
 			return _persist.Delete(Id);		
 		}
+		public Task<bool> DeleteEndereco(int Id)
+		{
+			return _persist.DeleteEndereco(Id);
+		}
 
 		public Task<CadastroCliente> Get(int Id)
 		{

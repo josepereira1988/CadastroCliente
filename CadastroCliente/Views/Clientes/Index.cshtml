@@ -33,7 +33,7 @@
 							<td>@item.DataNacimento.ToString("dd/MM/yyyy")</td>
 							<td>@item.Telefone</td>
 							<td>@item.Email</td>
-							<td><a class="btn btn-outline-danger btnExcluir" id="@item.Id" name="@item.Name">Excluir</a><a asp-action="Exibir" asp-route-id="@item.Id" class="btn btn-outline-warning">Exibir</a></td>
+							<td><a class="btn btn-outline-danger btnExcluir" id="@item.Id" name="@item.Name">Excluir</a><a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-outline-warning">Editar</a></td>
 						</tr>
 					}
 				</tbody>
@@ -107,7 +107,6 @@
 					<div>
 						<label class="col-form-label">Logadouro</label>
 						<input class="campoEndereco form-control" id="logadouro" />
-						<input class="campoEndereco form-control" id="Id" hidden />
 					</div>
 					<div>
 						<label class="col-form-label">Numero</label>
@@ -139,7 +138,7 @@
 				<div class="modal-body">
 					<div>
 						<label id="lblExcluir"></label>
-						<input class="campoEndereco form-control" id="ExcluirId" hidden />
+						<input class="form-control" id="ExcluirId" hidden />
 					</div>
 				</div>
 				<div class="modal-footer">

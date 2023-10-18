@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persist;
 
@@ -10,9 +11,11 @@ using Persist;
 namespace Persist.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20231018014736_Complemento")]
+    partial class Complemento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,7 +80,7 @@ namespace Persist.Migrations
 
                     b.HasIndex("ClienteId");
 
-                    b.ToTable("Endereco");
+                    b.ToTable("EnderecoCliente");
                 });
 
             modelBuilder.Entity("Domain.EnderecoCliente", b =>
