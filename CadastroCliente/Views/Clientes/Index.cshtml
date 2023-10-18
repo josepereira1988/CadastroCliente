@@ -1,0 +1,154 @@
+﻿@model List<Domain.CadastroCliente>
+<div>
+
+	<div class="card shadow-sm rounded d-flex">
+		<div class="Titulo d-inline d-flex justify-content-between">
+			<h1 class="w-50 py-3">Lista de cadastro</h1>
+			<div class="px-1 w-25 py-3">
+				<button class="btn btn-outline-info btn-lg" id="btnCadastroNovo">Novo</button>
+			</div>
+		</div>
+
+	</div>
+	<div class="card shadow-sm rounded">
+		<div class="p-3">
+
+			<table id="example" class="table">
+				<thead class="table-active">
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Nome</th>
+						<th scope="col">Data Nacimento</th>
+						<th scope="col">Telefone</th>
+						<th scope="col">Email</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (Domain.CadastroCliente item in Model)
+					{
+						<tr>
+							<th scope="row">@item.Id</th>
+							<td>@item.Name</td>
+							<td>@item.DataNacimento.ToString("dd/MM/yyyy")</td>
+							<td>@item.Telefone</td>
+							<td>@item.Email</td>
+							<td><a class="btn btn-outline-danger btnExcluir" id="@item.Id" name="@item.Name">Excluir</a><a asp-action="Exibir" asp-route-id="@item.Id" class="btn btn-outline-warning">Exibir</a></td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+
+	<div class="modal fade bd-example-modal-lg" id="CadastroModal" aria-hidden="true" aria-labelledby="CadastroModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content modal-lg">
+				<div class="modal-header">
+					<h5 class="modal-title">Cadastro de Cliente</h5>
+				</div>
+				<div class="modal-body d-block justify-content-center">
+					<div class="d-flex d-inline">
+						<div class="w-25">
+							<label class="col-form-label">ID</label>
+							<input class="campo form-control" id="Id" readonly />
+						</div>
+						<div class="w-75 px-1">
+							<label class="col-form-label">Nome</label>
+							<input class="campo form-control" id="Name" />
+						</div>
+					</div>
+					<div class="d-flex d-inline">
+						<div class="w-25">
+							<label class="col-form-label">Data de Nacimento</label>
+							<input class="campo form-control" id="DataNacimento" type="date" />
+						</div>
+						<div class="w-75 px-1">
+							<label class="col-form-label">Telefone</label>
+							<input class="campo form-control" id="Telefone" type="tel" />
+						</div>
+					</div>
+					<div>
+						<label class="col-form-label">Email</label>
+						<input class="campo form-control" id="Email" type="email" />
+					</div>
+					<div class="py-2">
+						<button class="btn btn-outline-warning" id="btnEndereco">Adicionar Endereço</button>
+					</div>
+				</div>
+				<table id="example" class="table">
+					<thead class="table-active">
+						<tr>
+							<th scope="col" hidden>#</th>
+							<th scope="col">Logadouro</th>
+							<th scope="col">Numero</th>
+							<th scope="col">CEP</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody id="tbEndeco">
+					</tbody>
+				</table>
+				<div class="modal-footer justify-content-between">
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<button class="btn btn-outline-primary" id="btnSalvar">Salvar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="EnderecoModal" aria-hidden="true" aria-labelledby="EnderecoModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalToggleLabel2">Cadastrar Endereço</h5>
+				</div>
+				<div class="modal-body">
+					<div>
+						<label class="col-form-label">Logadouro</label>
+						<input class="campoEndereco form-control" id="logadouro" />
+						<input class="campoEndereco form-control" id="Id" hidden />
+					</div>
+					<div>
+						<label class="col-form-label">Numero</label>
+						<input class="campoEndereco form-control" id="numero" />
+					</div>
+					<div>
+						<label class="col-form-label">Complemento</label>
+						<input class="campoEndereco form-control" id="Complemento" />
+					</div>
+					<div>
+						<label class="col-form-label">CEP</label>
+						<input class="campoEndereco form-control" id="CEP" />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<button class="btn btn-outline-primary" id="btnaddEndereco">Adicionar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="ExcluirModal" aria-hidden="true" aria-labelledby="ExcluirModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalToggleLabel2">Excluir cliente</h5>
+				</div>
+				<div class="modal-body">
+					<div>
+						<label id="lblExcluir"></label>
+						<input class="campoEndereco form-control" id="ExcluirId" hidden />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<button class="btn btn-outline-primary" id="btnExcluirConfirmar">Excluir</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<script src="~/js/IndexCliente.js" asp-append-version="true"></script>
